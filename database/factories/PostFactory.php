@@ -20,6 +20,7 @@ $factory->define(Post::class, function (Faker $faker) {
         'slug' => $faker->slug,
         'image' => rand(0,1) == 1 ? 'Post_Image_' . rand(1, 5) . '.jpg' : null,
         'created_at' => $datetime,
-        'updated_at' => $datetime
+        'updated_at' => $datetime,
+        'published_at' => rand(0,4) == 0 ? $faker->dateTimeBetween('now', '+3 months') : (rand(0,4) == 0 ? null :$datetime)
     ];
 });
