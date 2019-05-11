@@ -1,3 +1,8 @@
+This repository is for practicing Laravel framework.
+I learn on Udemy.
+<br><b>Professional Blog+CMS Development With Laravel 5</b><br>
+https://www.udemy.com/build-blog-cms-with-laravel-5<br>
+Build Professional Blog+CMS with Laravel 5.x and take your Laravel skills to the next level
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 <p align="center">
