@@ -175,6 +175,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Custom Service Providers...
+         */
+        //GrahamCampbell\Markdown\MarkdownServiceProvider::class
+
     ],
 
     /*
@@ -226,6 +231,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        /*
+         * Custom aliases...
+         */
+        //'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
     ],
 
 ];
