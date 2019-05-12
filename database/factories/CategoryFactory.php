@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Category::class, function (Faker $faker) {
     return [
-        'title' => ucfirst($faker->words(rand(1,2), true)),
-        'slug' => $faker->slug
+        'title' => ucfirst($faker->unique()->words(rand(1,2), true)),
+        'slug' => $faker->unique()->slug
     ];
 });
