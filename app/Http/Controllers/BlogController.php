@@ -12,24 +12,18 @@ class BlogController extends Controller
 
     public function index(){
 
-        $categories = Category::with(['posts' => function($query){
-            $query->published();
-        }])->orderBy('title', 'asc')->get();
-
         $posts = Post::with('author')->latestFirst()->published()->simplePaginate($this->limit);
 
-        return view('blog.index', compact('posts', 'categories'));
+        return view('blog.index', compact('posts'));
     }
 
-    public function category($id){
+    public function category(Category $category){
 
-        $categories = Category::with(['posts' => function($query){
-            $query->published();
-        }])->orderBy('title', 'asc')->get();
+        $categoryName = $category->title;
 
-        $posts = Post::with('author')->latestFirst()->published()->where('category_id', $id)->simplePaginate($this->limit);
+        $posts = $category->posts()->with('author')->latestFirst()->published()->simplePaginate($this->limit);
 
-        return view('blog.index', compact('posts', 'categories'));
+        return view('blog.index', compact('posts', 'categoryName'));
     }
 
     public function show(Post $post)

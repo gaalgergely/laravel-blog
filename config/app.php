@@ -178,7 +178,8 @@ return [
         /*
          * Custom Service Providers...
          */
-        //GrahamCampbell\Markdown\MarkdownServiceProvider::class
+        //GrahamCampbell\Markdown\MarkdownServiceProvider::class,
+        App\Providers\ComposerServiceProvider::class,
 
     ],
 
