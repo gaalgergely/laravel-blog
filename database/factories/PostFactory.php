@@ -5,6 +5,7 @@
 use App\Post;
 use Faker\Generator as Faker;
 use App\User;
+use App\Category;
 
 $factory->define(Post::class, function (Faker $faker) {
 
@@ -13,6 +14,9 @@ $factory->define(Post::class, function (Faker $faker) {
     return [
         'author_id' => function(){
             return User::all()->random();
+        },
+        'category_id' => function(){
+            return Category::all()->random();
         },
         'title' => $faker->sentence(rand(8, 12)),
         'excerpt' => $faker->text(rand(250, 300)),
