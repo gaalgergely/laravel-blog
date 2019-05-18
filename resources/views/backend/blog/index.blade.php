@@ -13,7 +13,8 @@
             </h1>
             <ol class="breadcrumb">
                 <li><i class="fa fa-dashboard"></i> <a href="{{ route('home') }}">Dashboard</a></li>
-                <li class="active"><i class="fa fa-file"></i> Posts</li>
+                <li><a href="{{ route('blog.index') }}">Posts</a></li>
+                <li class="active">All Posts</li>
             </ol>
         </section>
 
@@ -22,6 +23,11 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box">
+                        <div class="box-header">
+                            <div class="pull-left">
+                                <a href="{{ route('blog.create') }}" class="btn btn-success">Add New</a>
+                            </div>
+                        </div>
                         <!-- /.box-header -->
                         <div class="box-body ">
                             <table class="table table-bordered">
@@ -35,7 +41,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($posts as $post)
+                                    @forelse($posts as $post)
                                     <tr>
                                         <td>
                                             <a href="{{ route('blog.edit', $post->id) }}" class="btn btn-xs btn-default"><i class="fa fa-edit"></i></a>
@@ -49,7 +55,15 @@
                                             {!! $post->publicationLabel() !!}
                                         </td>
                                     </tr>
-                                    @endforeach
+                                    @empty
+                                    <tr>
+                                        <td colspan="5">
+                                            <div class="alert alert-danger">
+                                                <strong>No record found</strong>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -73,4 +87,10 @@
         </section>
         <!-- /.content -->
     </div>
+@endsection
+
+@section('script')
+<script>
+    $('ul.pagination').addClass('no-margin pagination-sm');
+</script>
 @endsection

@@ -180,6 +180,7 @@ return [
          */
         //GrahamCampbell\Markdown\MarkdownServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
+        Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
 
     ],
 
@@ -236,6 +237,7 @@ return [
          * Custom aliases...
          */
         //'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
+        'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
     ],
 
 ];

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Forms\PostForm;
 use App\Post;
 use Illuminate\Http\Request;
+use Kris\LaravelFormBuilder\FormBuilder;
 
 class BlogController extends BackendController
 {
@@ -25,9 +27,13 @@ class BlogController extends BackendController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(FormBuilder $formBuilder)
     {
-        //
+        $form = $formBuilder->create(PostForm::class, [
+            'method' => 'POST',
+            'url' => route('blog.store')
+        ]);
+        return view('backend.blog.create', compact('form'));
     }
 
     /**
