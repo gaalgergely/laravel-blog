@@ -61,6 +61,19 @@ class Post extends Model
         return $this->excerpt ? Markdown::convertToHtml(e($this->excerpt)) : null;
     }
 
+    public function dateFormatted($showTimes = false){
+        $format = 'd/m/Y';
+        if($showTimes) $format .= ' H:i:s';
+        return $this->created_at->format($format);
+    }
+
+    public function publicationLabel()
+    {
+        if(!$this->published_at) return '<span class="label label-warning">Draft</span>';
+        elseif($this->published_at && $this->published_at->isFuture()) return '<span class="label label-info">Scheduled</span>';
+        else return '<span class="label label-success">Published</span>';
+    }
+
     public function scopeLatestFirst($query){
         //can be used latest() built-in function
         return $query->orderBy('published_at', 'desc');

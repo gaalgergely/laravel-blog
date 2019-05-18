@@ -29,9 +29,9 @@
                                     <tr>
                                         <td width="70">Action</td>
                                         <td>Title</td>
-                                        <td>Author</td>
-                                        <td>Category</td>
-                                        <td>Date</td>
+                                        <td width="120">Author</td>
+                                        <td width="150">Category</td>
+                                        <td width="150">Date</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -44,7 +44,10 @@
                                         <td>{{ $post->title }}</td>
                                         <td>{{ $post->author->name }}</td>
                                         <td>{{ $post->category->title }}</td>
-                                        <td>{{ $post->created_at }}</td>
+                                        <td>
+                                            <abbr title="{{ $post->dateFormatted(true) }}">{{ $post->dateFormatted() }}</abbr>
+                                            {!! $post->publicationLabel() !!}
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -53,16 +56,13 @@
                         <!-- /.box-body -->
                         <div class="box-footer clearfix">
                             <div class="pull-left">
-                                <ul class="pagination no-margin">
-                                    <li><a href="#">&laquo;</a></li>
-                                    <li><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">&raquo;</a></li>
-                                </ul>
+                                {{ $posts->render() }}
                             </div>
                             <div class="pull-right">
-                                <small>{{ $posts->count() }} items</small>
+                                <small>
+                                    <?php $postCount = $posts->total() ?>
+                                    {{ $postCount }} {{ \Illuminate\Support\Str::plural('post', $postCount) }}
+                                </small>
                             </div>
                         </div>
                     </div>
