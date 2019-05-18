@@ -55,6 +55,10 @@ class User extends Authenticatable
         return $this->bio ? Markdown::convertToHtml(e($this->bio)) : null;
     }
 
+    public function getRegisteredDateAttribute(){
+        return $this->email_verified_at->toDayDateTimeString();
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';
