@@ -45,6 +45,6 @@ return [
     'default_namespace' => '',
 
     'custom_fields' => [
-        'hr' => \App\Forms\Fields\HrType::class
+        'hr' => \App\Forms\Fields\HrType::class,
     ]
 ];

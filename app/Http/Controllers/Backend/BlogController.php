@@ -6,9 +6,12 @@ use App\Forms\PostForm;
 use App\Post;
 use Illuminate\Http\Request;
 use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class BlogController extends BackendController
 {
+    use FormBuilderTrait;
+
     protected $limit = 10;
 
     /**
@@ -44,7 +47,18 @@ class BlogController extends BackendController
      */
     public function store(Request $request)
     {
-        //
+        $form = $this->form(PostForm::class);
+
+        // It will automatically use current request, get the rules, and do the validation
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+
+        // Or automatically redirect on error. This will throw an HttpResponseException with redirect
+        $form->redirectIfNotValid();
+
+        $request->user()->posts()->create($form->getFieldValues());
+        return redirect()->route('blog.index')->with('success', 'Your post was created successfully!');
     }
 
     /**
