@@ -181,6 +181,7 @@ return [
         //GrahamCampbell\Markdown\MarkdownServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
         Kris\LaravelFormBuilder\FormBuilderServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
     ],
 
@@ -238,6 +239,7 @@ return [
          */
         //'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
         'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

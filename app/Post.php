@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Config;
+use Intervention\Image\Facades\Image;
 
 class Post extends Model
 {
@@ -15,11 +17,8 @@ class Post extends Model
 
     protected $dates = ['published_at'];
 
-    protected $uploadPath;
-
     public function __construct(array $attributes = [])
     {
-        $this->uploadPath = public_path('img');
         parent::__construct($attributes);
     }
 
@@ -42,7 +41,12 @@ class Post extends Model
              * @todo handle image when editing post
              */
             //$value->storePubliclyAs('img', $value->getClientOriginalName());
-            $value->move($this->uploadPath, $value->getClientOriginalName());
+            $success = $value->move(config('cms.image.directory'), $value->getClientOriginalName());
+            if($success){
+                Image::make(config('cms.image.directory').'/'.$value->getClientOriginalName())
+                    ->resize(config('cms.image.thumbnail.width'), config('cms.image.thumbnail.height'))
+                    ->save(config('cms.image.directory') . '/' .str_replace(".{$value->getClientOriginalExtension()}", "_thumb.{$value->getClientOriginalExtension()}", $value->getClientOriginalName()));
+            }
             $this->attributes['image'] = $value->getClientOriginalName();
         }
     }
@@ -53,8 +57,8 @@ class Post extends Model
 
         if(!is_null($this->image))
         {
-            if(file_exists(public_path() . '/img/' . $this->image)){
-                $imageUrl = asset('img/' . $this->image);
+            if(file_exists(public_path() . '/' .config('cms.image.directory') . '/' . $this->image)){
+                $imageUrl = asset(config('cms.image.directory') . '/' . $this->image);
             }
         }
 
@@ -69,8 +73,8 @@ class Post extends Model
         {
             $ext = substr(strrchr($this->image, '.'), 1);
             $thumbnail = str_replace(".{$ext}", '_thumb.jpg', $this->image);
-            if(file_exists(public_path() . '/img/' . $thumbnail)){
-                $imageUrl = asset('img/' . $thumbnail);
+            if(file_exists(public_path() . '/' .config('cms.image.directory'). '/' . $thumbnail)){
+                $imageUrl = asset(config('cms.image.directory') . '/' . $thumbnail);
             }
         }
 
