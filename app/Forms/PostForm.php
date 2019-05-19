@@ -22,7 +22,10 @@ class PostForm extends Form
             ->add('body', 'textarea', [
                 'rules' => 'required'
             ])
-            ->add('image')
+            ->add('image', 'file', [
+                'label' => 'Feature Image',
+                'rules' => 'mimes:jpg,jpeg,bmp,png'
+            ])
             ->add('published_at', 'text', [
                 'label' => 'Publish Date',
                 /*

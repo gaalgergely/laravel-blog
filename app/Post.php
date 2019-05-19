@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 
 class Post extends Model
 {
@@ -13,6 +14,14 @@ class Post extends Model
     ];
 
     protected $dates = ['published_at'];
+
+    protected $uploadPath;
+
+    public function __construct(array $attributes = [])
+    {
+        $this->uploadPath = public_path('img');
+        parent::__construct($attributes);
+    }
 
     public function author()
     {
@@ -25,6 +34,17 @@ class Post extends Model
 
     public function setPublishedAtAttribute($value){
         $this->attributes['published_at'] = $value ?: null;
+    }
+
+    public function setImageAttribute($value){
+        if($value instanceof UploadedFile){
+            /**
+             * @todo handle image when editing post
+             */
+            //$value->storePubliclyAs('img', $value->getClientOriginalName());
+            $value->move($this->uploadPath, $value->getClientOriginalName());
+            $this->attributes['image'] = $value->getClientOriginalName();
+        }
     }
 
     public function getImageUrlAttribute(){
