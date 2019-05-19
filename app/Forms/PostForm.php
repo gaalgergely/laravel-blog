@@ -20,7 +20,7 @@ class PostForm extends Form
             ])
             ->add('excerpt', 'textarea')
             ->add('body', 'textarea', [
-                'rules' => 'required'
+                'rules' => 'required',
             ])
             ->add('image', 'file', [
                 'label' => 'Feature Image',
