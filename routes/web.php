@@ -33,6 +33,8 @@ Route::get('/author/{author}', [
 
 Auth::routes(['register' => false]);
 
-Route::get('/home', 'Backend\HomeController@index')->name('home');
+Route::get('/backend/home', 'Backend\HomeController@index')->name('home');
 
-Route::resource('/backend/blog', 'Backend\BlogController');
+Route::name('backend.')->group(function(){
+    Route::resource('/backend/blog', 'Backend\BlogController');
+});

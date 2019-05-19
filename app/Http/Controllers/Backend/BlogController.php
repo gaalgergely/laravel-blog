@@ -34,7 +34,7 @@ class BlogController extends BackendController
     {
         $form = $formBuilder->create(PostForm::class, [
             'method' => 'POST',
-            'url' => route('blog.store')
+            'url' => route('backend.blog.store')
         ]);
         return view('backend.blog.create', compact('form'));
     }
@@ -58,7 +58,7 @@ class BlogController extends BackendController
         $form->redirectIfNotValid();
 
         $request->user()->posts()->create($form->getFieldValues());
-        return redirect()->route('blog.index')->with('success', 'Your post was created successfully!');
+        return redirect()->route('backend.blog.index')->with('success', 'Your post was created successfully!');
     }
 
     /**

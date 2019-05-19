@@ -13,7 +13,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li><i class="fa fa-dashboard"></i> <a href="{{ route('home') }}">Dashboard</a></li>
-                <li><a href="{{ route('blog.index') }}">Posts</a></li>
+                <li><a href="{{ route('backend.blog.index') }}">Posts</a></li>
                 <li class="active">Add new</li>
             </ol>
         </section>
