@@ -52,5 +52,10 @@
     });
     var excerptEditor = new SimpleMDE({ element: $("#excerpt")[0] });
     var bodyEditor = new SimpleMDE({ element: $("#body")[0] });
+
+    $('#published_at').datetimepicker({
+        format: 'YY-MM-DD HH:mm:ss',
+        showClear: true
+    });
 </script>
 @endsection

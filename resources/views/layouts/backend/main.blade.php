@@ -20,6 +20,10 @@
 
     <link rel="stylesheet" href="/backend/plugins/simple-mde/simplemde.min.css">
 
+    <link rel="stylesheet" href="/backend/css/bootstrap-datetimepicker.min.css">
+
+    <link rel="stylesheet" href="/backend/plugins/jasny-bootstrap/css/jasny-bootstrap.min.css">
+
     <link rel="stylesheet" href="/backend/css/custom.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -55,6 +59,12 @@
 <script src="/backend/js/bootstrap.min.js"></script>
 
 <script src="/backend/plugins/simple-mde/simplemde.min.js"></script>
+
+<script src="/backend/js/moment.min.js"></script>
+
+<script src="/backend/js/bootstrap-datetimepicker.min.js"></script>
+
+<script src="/backend/plugins/jasny-bootstrap/js/jasny-bootstrap.min.js"></script>
 
 <!-- AdminLTE App -->
 <script src="/backend/js/app.min.js"></script>

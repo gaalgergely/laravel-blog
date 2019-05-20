@@ -46,5 +46,6 @@ return [
 
     'custom_fields' => [
         'hr' => \App\Forms\Fields\HrType::class,
+        'imageupload' => \App\Forms\Fields\ImageUploadType::class
     ]
 ];

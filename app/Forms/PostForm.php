@@ -22,7 +22,7 @@ class PostForm extends Form
             ->add('body', 'textarea', [
                 'rules' => 'required',
             ])
-            ->add('image', 'file', [
+            ->add('image', 'imageupload', [
                 'label' => 'Feature Image',
                 'rules' => 'mimes:jpg,jpeg,bmp,png'
             ])
