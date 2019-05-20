@@ -16,7 +16,7 @@ class PostForm extends Form
                 'rules' => 'required'
             ])
             ->add('slug', 'text', [
-                'rules' => 'required|unique:posts'
+                'rules' => 'required|unique:posts' . (($this->request->isMethod('PUT')) ? ',id,'.$this->request->route()->parameter('blog') : '')
             ])
             ->add('excerpt', 'textarea')
             ->add('body', 'textarea', [
@@ -24,7 +24,8 @@ class PostForm extends Form
             ])
             ->add('image', 'imageupload', [
                 'label_show' => false,
-                'rules' => 'mimes:jpg,jpeg,bmp,png'
+                'rules' => 'mimes:jpg,jpeg,bmp,png',
+                'value' => (isset($this->model->image_thumb_url) && $this->model->image_thumb_url) ? $this->model->image_thumb_url : 'http://placehold.it/200x150&text=No+Image',
             ])
             ->add('published_at', 'text', [
                 'label' => 'Publish Date',

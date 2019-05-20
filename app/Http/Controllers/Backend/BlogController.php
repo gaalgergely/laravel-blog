@@ -36,7 +36,7 @@ class BlogController extends BackendController
             'method' => 'POST',
             'url' => route('backend.blog.store')
         ]);
-        return view('backend.blog.create', compact('form'));
+        return view('backend.blog.edit', compact('form'));
     }
 
     /**
@@ -77,10 +77,19 @@ class BlogController extends BackendController
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     *
+     * @todo the controller does not receive Post object
      */
-    public function edit($id)
+    public function edit($id, FormBuilder $formBuilder)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        $form = $formBuilder->create(PostForm::class, [
+            'method' => 'PUT',
+            'url' => route('backend.blog.update', ['id' => $id]),
+            'model' => $post
+        ]);
+        return view('backend.blog.edit', compact('form'));
     }
 
     /**
@@ -92,7 +101,20 @@ class BlogController extends BackendController
      */
     public function update(Request $request, $id)
     {
-        //
+        $form = $this->form(PostForm::class);
+
+        // It will automatically use current request, get the rules, and do the validation
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+
+        // Or automatically redirect on error. This will throw an HttpResponseException with redirect
+        $form->redirectIfNotValid();
+
+        $post = Post::findOrFail($id);
+        $post->update($form->getFieldValues());
+
+        return redirect()->route('backend.blog.index')->with('success', 'Your post was updated successfully!');
     }
 
     /**

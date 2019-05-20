@@ -11,7 +11,7 @@
     <?php if ($showField): ?>
     <div class="fileinput fileinput-new" data-provides="fileinput">
         <div class="fileinput-new img-thumbnail" style="width: 200px; height: 150px;">
-            <img src="http://placehold.it/200x150&text=No+Image"  alt="No Image">
+            <img src="{{ $options['value'] }}">
         </div>
         <div class="fileinput-preview fileinput-exists img-thumbnail" style="max-width: 200px; max-height: 150px;"></div>
         <div>

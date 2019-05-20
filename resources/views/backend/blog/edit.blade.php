@@ -1,6 +1,6 @@
 @extends('layouts.backend.main')
 
-@section('title', 'MyBlog | Add new post')
+@section('title', 'MyBlog | ' . (($form->getModel() ? 'Edit post' : 'Add new post')))
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -9,12 +9,16 @@
         <section class="content-header">
             <h1>
                 Blog
-                <small>Add new post</small>
+                <small>@if($form->getModel()) Edit post @else Add new post @endif</small>
             </h1>
             <ol class="breadcrumb">
                 <li><i class="fa fa-dashboard"></i> <a href="{{ route('home') }}">Dashboard</a></li>
                 <li><a href="{{ route('backend.blog.index') }}">Posts</a></li>
+                @if($form->getModel())
+                <li class="active">Edit</li>
+                @else
                 <li class="active">Add new</li>
+                @endif
             </ol>
         </section>
 
