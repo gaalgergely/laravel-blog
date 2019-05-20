@@ -21,16 +21,49 @@
         <!-- Main content -->
         <section class="content">
             <div class="row">
-                <div class="col-xs-12">
+                {!! form_start($form, ['files' => true]) !!}
+                <div class="col-xs-9">
                     <div class="box">
                         <!-- /.box-header -->
                         <div class="box-body ">
-                            {!! form($form) !!}
+                            {!! form_row($form->title) !!}
+                            {!! form_row($form->slug) !!}
+                            {!! form_row($form->excerpt) !!}
+                            {!! form_row($form->body) !!}
                         </div>
                         <!-- /.box-body -->
                     </div>
                     <!-- /.box -->
                 </div>
+                <div class="col-xs-3">
+                    <div class="box">
+                        <div class="box-header with-border"><h3 class="box-title">Publish</h3></div>
+                        <div class="box-body">
+                            {!! form_row($form->published_at) !!}
+                        </div>
+                        <div class="box-footer clearfix">
+                            <div class="pull-left">
+                                <a id="draft-btn" class="btn btn-default">Save Draft</a>
+                            </div>
+                            <div class="pull-right">
+                                {!! form_row($form->submit) !!}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="box-header with-border"><h3 class="box-title">Category</h3></div>
+                        <div class="box-body">
+                            {!! form_row($form->category_id) !!}
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="box-header with-border"><h3 class="box-title">Feature Image</h3></div>
+                        <div class="box-body text-center">
+                            {!! form_row($form->image) !!}
+                        </div>
+                    </div>
+                </div>
+                {!! form_end($form) !!}
             </div>
             <!-- ./row -->
         </section>
@@ -52,10 +85,21 @@
     });
     var excerptEditor = new SimpleMDE({ element: $("#excerpt")[0] });
     var bodyEditor = new SimpleMDE({ element: $("#body")[0] });
+    $("#body").attr('required' ,false);
+    /**
+     * @todo validate post body textarea editor
+     */
+    //$(".CodeMirror textarea:eq(1)").attr('required' ,true);
 
     $('#published_at').datetimepicker({
         format: 'YY-MM-DD HH:mm:ss',
         showClear: true
+    });
+
+    $('#draft-btn').click(function(e) {
+        e.preventDefault();
+        $('#published_at').val("");
+        $('button[type=submit]').click();
     });
 </script>
 @endsection

@@ -20,10 +20,10 @@
         </div>
     </div>
 
-    <?php //include '../vendor/laravel-form-builder/help_block.php' ?>
+    <?php include  resource_path('views') . '/vendor/laravel-form-builder/help_block.php' ?>
 <?php endif; ?>
 
-    <?php //include '../vendor/laravel-form-builder/errors.php' ?>
+    <?php include  resource_path('views') . '/vendor/laravel-form-builder/errors.php' ?>
 
     <?php if ($showLabel && $showField): ?>
     <?php if ($options['wrapper'] !== false): ?>

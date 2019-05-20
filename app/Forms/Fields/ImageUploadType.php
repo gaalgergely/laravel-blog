@@ -11,4 +11,5 @@ class ImageUploadType extends FormField
     {
         return 'fields.imageupload';
     }
+
 }

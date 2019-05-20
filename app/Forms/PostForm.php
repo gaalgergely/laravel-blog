@@ -23,7 +23,7 @@ class PostForm extends Form
                 'rules' => 'required',
             ])
             ->add('image', 'imageupload', [
-                'label' => 'Feature Image',
+                'label_show' => false,
                 'rules' => 'mimes:jpg,jpeg,bmp,png'
             ])
             ->add('published_at', 'text', [
@@ -35,12 +35,11 @@ class PostForm extends Form
                 //'default_value' => Carbon::now(),
             ])
             ->add('category_id', 'select', [
-                'label' => 'Category',
+                'label_show' => false,
                 'choices' => Category::pluck('title', 'id')->toArray(),
                 'empty_value' => '=== Select category ===',
                 'rules' => ['required', new CategoryExists()]
             ])
-            ->add('hr', 'hr')
             ->add('submit', 'submit', [
                 'label' => 'Save',
                 'attr' => ['class' => 'btn btn-primary']
