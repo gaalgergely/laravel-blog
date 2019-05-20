@@ -5,12 +5,14 @@ namespace App;
 use Carbon\Carbon;
 use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Config;
 use Intervention\Image\Facades\Image;
 
 class Post extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'title', 'slug', 'excerpt', 'body', 'image', 'published_at', 'category_id'
     ];
