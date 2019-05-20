@@ -41,4 +41,8 @@ Route::name('backend.')->group(function(){
         'uses' => 'Backend\BlogController@restore',
         'as' => 'blog.restore'
     ]);
+    Route::delete('/backend/blog/force-destroy/{blog}', [
+        'uses' => 'Backend\BlogController@forceDestroy',
+        'as' => 'blog.force-destroy'
+    ]);
 });

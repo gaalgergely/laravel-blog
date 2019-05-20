@@ -23,9 +23,12 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box">
-                        <div class="box-header">
+                        <div class="box-header clearfix">
                             <div class="pull-left">
                                 <a href="{{ route('backend.blog.create') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add New</a>
+                            </div>
+                            <div class="pull-right" style="padding: 7px 0px;">
+                                <a href="?status=all">All</a> | <a href="?status=trash">Trash</a>
                             </div>
                         </div>
                         <!-- /.box-header -->
@@ -41,37 +44,11 @@
                                         <td width="150">Date</td>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @forelse($posts as $post)
-                                    <tr>
-                                        <td>
-                                            {!! Form::open(['method' => 'DELETE', 'route' => ['backend.blog.destroy', $post->id]]) !!}
-                                            <a href="{{ route('backend.blog.edit', $post->id) }}" class="btn btn-xs btn-default">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <button type="submit" class="btn btn-xs btn-danger">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                            {!! Form::close() !!}
-                                        </td>
-                                        <td>{{ $post->title }}</td>
-                                        <td>{{ $post->author->name }}</td>
-                                        <td>{{ $post->category->title }}</td>
-                                        <td>
-                                            <abbr title="{{ $post->dateFormatted(true) }}">{{ $post->dateFormatted() }}</abbr>
-                                            {!! $post->publicationLabel() !!}
-                                        </td>
-                                    </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="5">
-                                            <div class="alert alert-danger">
-                                                <strong>No record found</strong>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @endforelse
-                                </tbody>
+                                @if($onlyTrashed)
+                                    @include('backend.blog.table-trash')
+                                @else
+                                    @include('backend.blog.table')
+                                @endif
                             </table>
                         </div>
                         <!-- /.box-body -->

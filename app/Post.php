@@ -101,6 +101,10 @@ class Post extends Model
         return $this->created_at->format($format);
     }
 
+    public function deletionDateFormatted(){
+        return $this->deleted_at->format('d/m/Y');
+    }
+
     public function publicationLabel()
     {
         if(!$this->published_at) return '<span class="label label-warning">Draft</span>';

@@ -19,10 +19,19 @@ class BlogController extends BackendController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::with('category', 'author')->latest()->paginate($this->limit);
-        return view('backend.blog.index', compact('posts'));
+        if(($status = $request->get('status')) && $status == 'trash')
+        {
+            $posts = Post::onlyTrashed()->with('category', 'author')->latest()->paginate($this->limit);
+            $onlyTrashed = true;
+        }
+        else
+        {
+            $posts = Post::with('category', 'author')->latest()->paginate($this->limit);
+            $onlyTrashed = false;
+        }
+        return view('backend.blog.index', compact('posts', 'onlyTrashed'));
     }
 
     /**
@@ -127,6 +136,12 @@ class BlogController extends BackendController
     {
         Post::destroy($id);
         return redirect()->route('backend.blog.index')->with('trash-message', ['Your post was moved to trash!', $id]);
+    }
+
+    public function forceDestroy($id)
+    {
+        Post::onlyTrashed()->findOrFail($id)->forceDelete();
+        return redirect()->back()->with('message', 'Your post was deleted permanently!');
     }
 
     public function restore($id)
