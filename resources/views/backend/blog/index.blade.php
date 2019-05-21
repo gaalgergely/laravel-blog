@@ -28,7 +28,11 @@
                                 <a href="{{ route('backend.blog.create') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add New</a>
                             </div>
                             <div class="pull-right" style="padding: 7px 0px;">
-                                <a href="?status=all">All</a> | <a href="?status=trash">Trash</a>
+                                <a href="?status=all" class="@if(Request::get('status')=='all') selected-status @endif">All({{ \App\Post::all()->count() }}) </a> |
+                                <a href="?status=published" class="@if(Request::get('status')=='published') selected-status @endif">Published({{ \App\Post::published()->count() }})</a> |
+                                <a href="?status=scheduled" class="@if(Request::get('status')=='scheduled') selected-status @endif">Scheduled({{ \App\Post::scheduled()->count() }})</a> |
+                                <a href="?status=draft" class="@if(Request::get('status')=='draft') selected-status @endif">Draft({{ \App\Post::draft()->count() }})</a> |
+                                <a href="?status=trash" class="@if(Request::get('status')=='trash') selected-status @endif">Trash({{ \App\Post::onlyTrashed()->count() }})</a>
                             </div>
                         </div>
                         <!-- /.box-header -->
@@ -54,7 +58,7 @@
                         <!-- /.box-body -->
                         <div class="box-footer clearfix">
                             <div class="pull-left">
-                                {{ $posts->render() }}
+                                {{ $posts->appends(Request::query())->render() }}
                             </div>
                             <div class="pull-right">
                                 <small>

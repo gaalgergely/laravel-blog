@@ -21,15 +21,27 @@ class BlogController extends BackendController
      */
     public function index(Request $request)
     {
+        $onlyTrashed = false;
         if(($status = $request->get('status')) && $status == 'trash')
         {
             $posts = Post::onlyTrashed()->with('category', 'author')->latest()->paginate($this->limit);
             $onlyTrashed = true;
         }
+        elseif($status == 'published')
+        {
+            $posts = Post::published()->with('category', 'author')->latest()->paginate($this->limit);
+        }
+        elseif($status == 'scheduled')
+        {
+            $posts = Post::scheduled()->with('category', 'author')->latest()->paginate($this->limit);
+        }
+        elseif($status == 'draft')
+        {
+            $posts = Post::draft()->with('category', 'author')->latest()->paginate($this->limit);
+        }
         else
         {
             $posts = Post::with('category', 'author')->latest()->paginate($this->limit);
-            $onlyTrashed = false;
         }
         return view('backend.blog.index', compact('posts', 'onlyTrashed'));
     }
@@ -135,18 +147,26 @@ class BlogController extends BackendController
     public function destroy($id)
     {
         Post::destroy($id);
-        return redirect()->route('backend.blog.index')->with('trash-message', ['Your post was moved to trash!', $id]);
+        return redirect()->back()->with('trash-message', ['Your post was moved to trash!', $id]);
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function forceDestroy($id)
     {
         Post::onlyTrashed()->findOrFail($id)->forceDelete();
         return redirect()->back()->with('message', 'Your post was deleted permanently!');
     }
 
+    /**
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function restore($id)
     {
         Post::onlyTrashed()->findOrFail($id)->restore();
-        return redirect()->route('backend.blog.index')->with('message', 'Your post was restored!');
+        return redirect()->back()->with('message', 'Your post was restored!');
     }
 }
