@@ -33,7 +33,16 @@
                     <li><a href="{{ route('backend.blog.create') }}"><i class="fa fa-circle-o"></i> Add New</a></li>
                 </ul>
             </li>
-            <li><a href="#"><i class="fa fa-folder"></i> <span>Categories</span></a></li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-folder"></i>
+                    <span>Categories</span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('backend.category.index') }}"><i class="fa fa-circle-o"></i> All Categories</a></li>
+                    <li><a href="{{ route('backend.category.create') }}"><i class="fa fa-circle-o"></i> Add New</a></li>
+                </ul>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->
