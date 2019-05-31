@@ -1,6 +1,6 @@
 @extends('layouts.backend.main')
 
-@section('title', 'MyBlog | ' . (($form->getModel() ? 'Edit category' : 'Add new category')))
+@section('title', 'MyBlog | ' . (($form->getModel() ? 'Edit user' : 'Add new user')))
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -8,12 +8,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Category
-                <small>@if($form->getModel()) Edit category @else Add new category @endif</small>
+                User
+                <small>@if($form->getModel()) Edit user @else Add new user @endif</small>
             </h1>
             <ol class="breadcrumb">
                 <li><i class="fa fa-dashboard"></i> <a href="{{ route('home') }}">Dashboard</a></li>
-                <li><a href="{{ route('backend.category.index') }}">Categories</a></li>
+                <li><a href="{{ route('backend.user.index') }}">Users</a></li>
                 @if($form->getModel())
                 <li class="active">Edit</li>
                 @else
@@ -41,7 +41,7 @@
 
 @section('script')
 <script>
-    $('#title').on('blur', function(){
+    $('#name').on('blur', function(){
         var theTitle = this.value.toLowerCase().trim(),
             slugInput = $('#slug'),
             theSlug = theTitle.replace(/&/g, '-and-')
@@ -51,5 +51,6 @@
 
         slugInput.val(theSlug);
     });
+    var bioEditor = new SimpleMDE({ element: $("#bio")[0] });
 </script>
 @endsection

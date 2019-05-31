@@ -1,6 +1,6 @@
 @extends('layouts.backend.main')
 
-@section('title', 'MyBlog | Categories')
+@section('title', 'MyBlog | Users')
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -8,13 +8,13 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Category
-                <small>Display all categories</small>
+                User
+                <small>Display all users</small>
             </h1>
             <ol class="breadcrumb">
                 <li><i class="fa fa-dashboard"></i> <a href="{{ route('home') }}">Dashboard</a></li>
-                <li><a href="{{ route('backend.category.index') }}">Categories</a></li>
-                <li class="active">All Categories</li>
+                <li><a href="{{ route('backend.user.index') }}">Users</a></li>
+                <li class="active">All Users</li>
             </ol>
         </section>
 
@@ -25,7 +25,7 @@
                     <div class="box">
                         <div class="box-header clearfix">
                             <div class="pull-left">
-                                <a href="{{ route('backend.category.create') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add New</a>
+                                <a href="{{ route('backend.user.create') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add New</a>
                             </div>
                         </div>
                         <!-- /.box-header -->
@@ -35,31 +35,33 @@
                                 <thead>
                                     <tr>
                                         <td width="70">Action</td>
-                                        <td>Title</td>
-                                        <td width="120">Post count</td>
+                                        <td>Name</td>
+                                        <td>Email</td>
+                                        <td>Role</td>
+                                        <td>Posts Count</td>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @forelse($categories as $category)
+                                @forelse($users as $user)
                                     <tr>
                                         <td>
-                                            {!! Form::open(['method' => 'DELETE', 'route' => ['backend.category.destroy', $category->id]]) !!}
-                                            <a href="{{ route('backend.category.edit', $category->id) }}" class="btn btn-xs btn-default">
+                                            <a href="{{ route('backend.user.edit', $user->id) }}" class="btn btn-xs btn-default">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            @if($category->id==config('cms.default_category_id'))
+                                            @if($user->id == config('cms.default_user_id') || $user->id == auth()->user()->id)
                                                 <button onclick="return false;" type="submit" class="btn btn-xs btn-danger disabled">
                                                     <i class="fa fa-times"></i>
                                                 </button>
                                             @else
-                                                <button onclick="return confirm('Are you sure?');" type="submit" class="btn btn-xs btn-danger">
+                                                <a href="{{ route('backend.user.confirm', [$user->id]) }}" type="submit" class="btn btn-xs btn-danger">
                                                     <i class="fa fa-times"></i>
-                                                </button>
+                                                </a>
                                             @endif
-                                            {!! Form::close() !!}
                                         </td>
-                                        <td>{{ $category->title }}</td>
-                                        <td>{{ $category->posts->count() }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td> - </td>
+                                        <td>{{ $user->posts()->withTrashed()->count() }}</td>
                                     </tr>
                                 @empty
                                     <tr>
@@ -76,12 +78,12 @@
                         <!-- /.box-body -->
                         <div class="box-footer clearfix">
                             <div class="pull-left">
-                                {{ $categories->render() }}
+                                {{ $users->render() }}
                             </div>
                             <div class="pull-right">
                                 <small>
-                                    <?php $categoriesCount = $categories->total() ?>
-                                    {{ $categoriesCount }} {{ \Illuminate\Support\Str::plural('category', $categoriesCount) }}
+                                    <?php $usersCount = $users->total() ?>
+                                    {{ $usersCount }} {{ \Illuminate\Support\Str::plural('user', $usersCount) }}
                                 </small>
                             </div>
                         </div>

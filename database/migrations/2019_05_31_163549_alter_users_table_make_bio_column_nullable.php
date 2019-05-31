@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterPostsSetExcerptNullable extends Migration
+class AlterUsersTableMakeBioColumnNullable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AlterPostsSetExcerptNullable extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->text('excerpt')->nullable()->change();
+        Schema::table('users', function (Blueprint $table) {
+            $table->text('bio')->nullable()->change();
         });
     }
 
@@ -25,8 +25,8 @@ class AlterPostsSetExcerptNullable extends Migration
      */
     public function down()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->text('excerpt')->nullable(false)->change();
+        Schema::table('users', function (Blueprint $table) {
+            $table->text('bio', 191)->nullable(false)->change();
         });
     }
 }

@@ -45,6 +45,18 @@
                     <li><a href="{{ route('backend.category.create') }}"><i class="fa fa-circle-o"></i> Add New</a></li>
                 </ul>
             </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-users"></i>
+                    <span>Users</span>
+                    <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('backend.user.index') }}"><i class="fa fa-circle-o"></i> All Users</a></li>
+                    <li><a href="{{ route('backend.user.create') }}"><i class="fa fa-circle-o"></i> Add New</a></li>
+                </ul>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->

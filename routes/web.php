@@ -46,4 +46,9 @@ Route::name('backend.')->group(function(){
         'as' => 'blog.force-destroy'
     ]);
     Route::resource('/backend/category', 'Backend\CategoryController');
+    Route::resource('/backend/user', 'Backend\UserController');
+    Route::get('/backend/user/confirm/{user}', [
+        'uses' => 'Backend\UserController@confirm',
+        'as' => 'user.confirm'
+    ]);
 });
