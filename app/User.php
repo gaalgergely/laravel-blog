@@ -6,6 +6,7 @@ use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -56,11 +57,17 @@ class User extends Authenticatable
     }
 
     public function getRegisteredDateAttribute(){
-        return $this->email_verified_at->toDayDateTimeString();
+        if($this->email_verified_at) return $this->email_verified_at->toDayDateTimeString();
+        return $this->created_at->toDayDateTimeString();
     }
 
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        if(!empty($value)) $this->attributes['password'] = Hash::make($value);
     }
 }

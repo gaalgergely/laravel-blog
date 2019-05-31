@@ -132,7 +132,7 @@ class UserController extends BackendController
 
         if($deleteOption == 'delete')
         {
-            $user->posts()->withTrashed->forceDelete();
+            $user->posts()->withTrashed()->forceDelete();
         }
         elseif($deleteOption == 'attribute')
         {
