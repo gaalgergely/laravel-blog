@@ -10,10 +10,10 @@ class CategoryForm extends Form
     {
         $this
             ->add('title', 'text', [
-                'rules' => 'required'
+                'rules' => 'required|max:255|unique:categories' . (($this->request->isMethod('PUT')) ? ',id,'.$this->request->route()->parameter('category') : '')
             ])
             ->add('slug', 'text', [
-                'rules' => 'required|unique:categories' . (($this->request->isMethod('PUT')) ? ',id,'.$this->request->route()->parameter('category') : '')
+                'rules' => 'required|max:255|unique:categories' . (($this->request->isMethod('PUT')) ? ',id,'.$this->request->route()->parameter('category') : '')
             ])
             ->add('submit', 'submit', [
                 'label' => 'Save',

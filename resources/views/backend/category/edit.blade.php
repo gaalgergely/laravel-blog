@@ -26,7 +26,11 @@
         <section class="content">
             <div class="row">
                 <div class="col-xs-12">
-                    {!! form($form) !!}
+                    <div class="box">
+                        <div class="box-body">
+                            {!! form($form) !!}
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- ./row -->

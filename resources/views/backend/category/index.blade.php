@@ -30,12 +30,13 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body ">
-                            @include('backend.category.message')
+                            @include('backend.partials.message')
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <td width="70">Action</td>
                                         <td>Title</td>
+                                        <td width="120">Post count</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -46,12 +47,19 @@
                                             <a href="{{ route('backend.category.edit', $category->id) }}" class="btn btn-xs btn-default">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <button type="submit" class="btn btn-xs btn-danger">
-                                                <i class="fa fa-times"></i>
-                                            </button>
+                                            @if($category->id==config('cms.default_category_id'))
+                                                <button onclick="return false;" type="submit" class="btn btn-xs btn-danger disabled">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            @else
+                                                <button onclick="return confirm('Are you sure?');" type="submit" class="btn btn-xs btn-danger">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            @endif
                                             {!! Form::close() !!}
                                         </td>
                                         <td>{{ $category->title }}</td>
+                                        <td>{{ $category->posts->count() }}</td>
                                     </tr>
                                 @empty
                                     <tr>

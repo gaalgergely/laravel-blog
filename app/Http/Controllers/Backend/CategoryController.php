@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Backend;
 
 use App\Category;
 use App\Forms\CategoryForm;
+use App\Http\Requests\CategoryDestroyRequest;
+use App\Post;
 use Illuminate\Http\Request;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -12,8 +14,6 @@ class CategoryController extends BackendController
 {
     use FormBuilderTrait;
 
-    protected $limit = 10;
-
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +21,7 @@ class CategoryController extends BackendController
      */
     public function index()
     {
-        $categories = Category::orderBy('title', 'asc')->paginate($this->limit);
+        $categories = Category::with('posts')->orderBy('title', 'asc')->paginate($this->limit);
         return view('backend.category.index', compact('categories'));
     }
 
@@ -121,8 +121,10 @@ class CategoryController extends BackendController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(CategoryDestroyRequest $request, $id)
     {
-        //
+        Post::withTrashed()->where('category_id', $id)->update(['category_id' => config('cms.default_category_id')]);
+        Category::destroy($id);
+        return redirect()->back()->with('message', 'Your category was deleted!');
     }
 }

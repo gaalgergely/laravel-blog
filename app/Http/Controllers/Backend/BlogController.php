@@ -12,8 +12,6 @@ class BlogController extends BackendController
 {
     use FormBuilderTrait;
 
-    protected $limit = 10;
-
     /**
      * Display a listing of the resource.
      *

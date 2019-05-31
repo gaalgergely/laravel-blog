@@ -37,7 +37,7 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body ">
-                            @include('backend.blog.message')
+                            @include('backend.partials.message')
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
