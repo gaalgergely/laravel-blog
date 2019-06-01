@@ -5,17 +5,7 @@
     <div class="row">
         <div class="col-md-8">
 
-            @if(isset($categoryName))
-            <div class="alert alert-info">
-                <p>Category: <strong>{{ $categoryName }}</strong></p>
-            </div>
-            @endif
-
-            @if(isset($authorName))
-                <div class="alert alert-info">
-                    <p>Author: <strong>{{ $authorName }}</strong></p>
-                </div>
-            @endif
+            @include('blog.alert')
 
             @forelse($posts as $post)
             <article class="post-item">
