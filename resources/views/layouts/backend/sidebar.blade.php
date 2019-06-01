@@ -33,6 +33,7 @@
                     <li><a href="{{ route('backend.blog.create') }}"><i class="fa fa-circle-o"></i> Add New</a></li>
                 </ul>
             </li>
+            @role(['editor', 'admin'])
             <li>
                 <a href="#">
                     <i class="fa fa-folder"></i>
@@ -45,6 +46,8 @@
                     <li><a href="{{ route('backend.category.create') }}"><i class="fa fa-circle-o"></i> Add New</a></li>
                 </ul>
             </li>
+            @endrole
+            @role('admin')
             <li>
                 <a href="#">
                     <i class="fa fa-users"></i>
@@ -57,6 +60,7 @@
                     <li><a href="{{ route('backend.user.create') }}"><i class="fa fa-circle-o"></i> Add New</a></li>
                 </ul>
             </li>
+            @endrole
         </ul>
     </section>
     <!-- /.sidebar -->

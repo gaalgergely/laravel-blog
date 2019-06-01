@@ -37,9 +37,13 @@ class BlogController extends BackendController
         {
             $posts = Post::draft()->with('category', 'author')->latest()->paginate($this->limit);
         }
+        elseif($status == 'draft')
+        {
+            $posts = Post::draft()->with('category', 'author')->latest()->paginate($this->limit);
+        }
         else
         {
-            $posts = Post::with('category', 'author')->latest()->paginate($this->limit);
+            $posts = $request->user()->posts()->with('category', 'author')->latest()->paginate($this->limit);
         }
         return view('backend.blog.index', compact('posts', 'onlyTrashed'));
     }

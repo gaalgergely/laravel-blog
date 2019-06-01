@@ -1,14 +1,29 @@
 <tbody>
+<?php
+        $currentUser = request()->user();
+?>
 @forelse($posts as $post)
     <tr>
         <td>
             {!! Form::open(['method' => 'DELETE', 'route' => ['backend.blog.destroy', $post->id]]) !!}
-            <a href="{{ route('backend.blog.edit', $post->id) }}" class="btn btn-xs btn-default">
-                <i class="fa fa-edit"></i>
-            </a>
-            <button type="submit" class="btn btn-xs btn-danger">
-                <i class="fa fa-times"></i>
-            </button>
+            @if($currentUser->owns(\App\Post::withTrashed()->findOrFail($post->id), 'author_id') || $currentUser->can('update-others-post'))
+                <a href="{{ route('backend.blog.edit', $post->id) }}" class="btn btn-xs btn-default">
+                    <i class="fa fa-edit"></i>
+                </a>
+            @else
+                <a href="#" class="btn btn-xs btn-default disabled">
+                    <i class="fa fa-edit"></i>
+                </a>
+            @endif
+            @if($currentUser->owns(\App\Post::withTrashed()->findOrFail($post->id), 'author_id') || $currentUser->can('delete-others-post'))
+                <button type="submit" class="btn btn-xs btn-danger">
+                    <i class="fa fa-times"></i>
+                </button>
+            @else
+                <button type="submit" onclick="return false;" class="btn btn-xs btn-danger disabled">
+                    <i class="fa fa-times"></i>
+                </button>
+            @endif
             {!! Form::close() !!}
         </td>
         <td>{{ $post->title }}</td>
