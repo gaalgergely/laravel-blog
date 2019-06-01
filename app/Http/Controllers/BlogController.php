@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Tag;
 use App\User;
 use Illuminate\Http\Request;
 use App\Post;
@@ -13,7 +14,7 @@ class BlogController extends Controller
 
     public function index(){
 
-        $posts = Post::with('author')->latestFirst()->published()->filter(request('term'))->simplePaginate($this->limit);
+        $posts = Post::with('author', 'category', 'tags')->latestFirst()->published()->filter(request('term'))->simplePaginate($this->limit);
 
         return view('blog.index', compact('posts'));
     }
@@ -22,7 +23,7 @@ class BlogController extends Controller
 
         $categoryName = $category->title;
 
-        $posts = $category->posts()->with('author')->latestFirst()->published()->simplePaginate($this->limit);
+        $posts = $category->posts()->with('author', 'category', 'tags')->latestFirst()->published()->simplePaginate($this->limit);
 
         return view('blog.index', compact('posts', 'categoryName'));
     }
@@ -31,9 +32,18 @@ class BlogController extends Controller
     {
         $authorName = $author->name;
 
-        $posts = $author->posts()->with('category')->latestFirst()->published()->simplePaginate($this->limit);
+        $posts = $author->posts()->with('author', 'category', 'tags')->latestFirst()->published()->simplePaginate($this->limit);
 
         return view('blog.index', compact('posts', 'authorName'));
+    }
+
+    public function tag(Tag $tag)
+    {
+        $tagName = $tag->name;
+
+        $posts = $tag->posts()->with('author', 'category', 'tags')->latestFirst()->published()->simplePaginate($this->limit);
+
+        return view('blog.index', compact('posts', 'tagName'));
     }
 
     public function show(Post $post)

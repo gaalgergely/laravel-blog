@@ -34,20 +34,32 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
     public function setPublishedAtAttribute($value){
         $this->attributes['published_at'] = $value ?: null;
     }
 
     public function setImageAttribute($value){
-        if($value instanceof UploadedFile){
-            $this->deleteImage();
-            $success = $value->move(config('cms.image.directory'), $value->getClientOriginalName());
-            if($success){
-                Image::make(config('cms.image.directory').'/'.$value->getClientOriginalName())
-                    ->resize(config('cms.image.thumbnail.width'), config('cms.image.thumbnail.height'))
-                    ->save(config('cms.image.directory') . '/' .str_replace(".{$value->getClientOriginalExtension()}", "_thumb.{$value->getClientOriginalExtension()}", $value->getClientOriginalName()));
+        if(!app()->runningInConsole())
+        {
+            if($value instanceof UploadedFile){
+                $this->deleteImage();
+                $success = $value->move(config('cms.image.directory'), $value->getClientOriginalName());
+                if($success){
+                    Image::make(config('cms.image.directory').'/'.$value->getClientOriginalName())
+                        ->resize(config('cms.image.thumbnail.width'), config('cms.image.thumbnail.height'))
+                        ->save(config('cms.image.directory') . '/' .str_replace(".{$value->getClientOriginalExtension()}", "_thumb.{$value->getClientOriginalExtension()}", $value->getClientOriginalName()));
+                }
+                $this->attributes['image'] = $value->getClientOriginalName();
             }
-            $this->attributes['image'] = $value->getClientOriginalName();
+        }
+        else
+        {
+            $this->attributes['image'] = $value;
         }
     }
 
@@ -107,6 +119,17 @@ class Post extends Model
 
     public function getExcerptHtmlAttribute(){
         return $this->excerpt ? Markdown::convertToHtml(e($this->excerpt)) : null;
+    }
+
+    public function getTagsHtmlAttribute()
+    {
+        $tags = [];
+        foreach($this->tags as $tag)
+        {
+            $route = route('tag', $tag->slug);
+            $tags[] = "<a href=\"{$route}\">{$tag->name}</a>";
+        }
+        return implode(', ', $tags);
     }
 
     public function dateFormatted($showTimes = false){

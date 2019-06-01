@@ -2,6 +2,10 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\User;
+use App\Category;
+use App\Post;
+use App\Tag;
 
 class DatabaseSeeder extends Seeder
 {
@@ -32,13 +36,16 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->call(UsersTableSeeder::class);
-        factory(\App\User::class, 5)->create();
+        factory(User::class, 5)->create();
         $this->call(RolesTableSeeder::class);
         $this->call(PermissionsTableSeeder::class);
 
         $this->call(CategoriesTableSeeder::class);
-        factory(\App\Category::class, 10)->create();
+        factory(Category::class, 10)->create();
 
-        factory(\App\Post::class, 100)->create();
+        factory(Post::class, 100)->create();
+
+        factory(Tag::class, 20)->create();
+        $this->call(PostTagTableSeeder::class);
     }
 }

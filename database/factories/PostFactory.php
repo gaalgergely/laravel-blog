@@ -22,7 +22,7 @@ $factory->define(Post::class, function (Faker $faker) {
         'excerpt' => $faker->text(rand(250, 300)),
         'body' => $faker->paragraphs(rand(10, 15), true),
         'slug' => $faker->unique()->slug,
-        'image' => rand(0,1) == 1 ? 'Post_Image_' . rand(1, 5) . '.jpg' : null,
+        'image' => rand(0,5) > 3 ? 'Post_Image_' . rand(1, 5) . '.jpg' : null,
         'view_count' => rand(1, 10) * 10,
         'created_at' => $datetime,
         'updated_at' => $datetime,
