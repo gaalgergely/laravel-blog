@@ -29,14 +29,14 @@
                             <img src="{{ Auth::user()->gravatar() }}" class="img-circle" alt="{{ Auth::user()->name }}">
 
                             <p>
-                                {{ Auth::user()->name }} - Web Developer
+                                {{ Auth::user()->name }} - {{ Auth::user()->roles->first()->display_name }}
                                 <small>Member since {{ Auth::user()->registered_date }}</small>
                             </p>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                <a href="{{ route('backend.account.edit') }}" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
                                 <a href="{{ route('logout') }}" class="btn btn-default btn-flat" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign out</a>

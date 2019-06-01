@@ -3,8 +3,7 @@
 namespace App\Forms;
 
 use App\Category;
-use App\Rules\CategoryExists;
-use Carbon\Carbon;
+use App\Rules\CategoryExistsRule;
 use Kris\LaravelFormBuilder\Form;
 
 class PostForm extends Form
@@ -39,7 +38,7 @@ class PostForm extends Form
                 'label_show' => false,
                 'choices' => Category::pluck('title', 'id')->toArray(),
                 'empty_value' => '=== Select category ===',
-                'rules' => ['required', new CategoryExists()]
+                'rules' => ['required', new CategoryExistsRule()]
             ])
             ->add('submit', 'submit', [
                 'label' => 'Save',

@@ -22,6 +22,7 @@
                     <div class="box">
                         <!-- /.box-header -->
                         <div class="box-body ">
+                            @include('backend.partials.message')
                             <h3>Welcome to MyBlog!</h3>
                             <p class="lead text-muted">Hallo {{ Auth::user()->name }}, Welcome to MyBlog</p>
 

@@ -60,7 +60,7 @@
                                         </td>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
-                                        <td> - </td>
+                                        <td>{{ $user->roles->first()->display_name }}</td>
                                         <td>{{ $user->posts()->withTrashed()->count() }}</td>
                                     </tr>
                                 @empty

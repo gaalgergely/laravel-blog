@@ -51,4 +51,12 @@ Route::name('backend.')->group(function(){
         'uses' => 'Backend\UserController@confirm',
         'as' => 'user.confirm'
     ]);
+    Route::get('backend/account/edit', [
+        'uses' => 'Backend\HomeController@edit',
+        'as' => 'account.edit'
+    ]);
+    Route::put('backend/account/edit', [
+        'uses' => 'Backend\HomeController@update',
+        'as' => 'account.update'
+    ]);
 });

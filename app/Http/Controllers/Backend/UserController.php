@@ -56,7 +56,9 @@ class UserController extends BackendController
         // Or automatically redirect on error. This will throw an HttpResponseException with redirect
         $form->redirectIfNotValid();
 
-        User::create($form->getFieldValues());
+        $user = User::create($form->getFieldValues());
+        $user->attachRole($request->role);
+
         return redirect()->route('backend.user.index')->with('success', 'User was created successfully!');
     }
 
@@ -113,6 +115,10 @@ class UserController extends BackendController
          */
         $user = User::findOrFail($id);
         $user->update($form->getFieldValues());
+        /**
+         * @todo protect root user from changing its role
+         */
+        $user->detachRoles()->attachRole($request->role);
 
         return redirect()->route('backend.user.index')->with('success', 'User was updated successfully!');
     }
