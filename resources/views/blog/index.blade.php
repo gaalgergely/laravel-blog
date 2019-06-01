@@ -44,7 +44,7 @@
             @endforelse
 
             <nav>
-                {{ $posts->links() }}
+                {{ $posts->appends(request()->only(['term']))->links() }}
             </nav>
         </div>
         @include('layouts.sidebar')

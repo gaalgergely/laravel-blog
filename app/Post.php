@@ -150,4 +150,23 @@ class Post extends Model
     {
         return $query->whereNull('published_at');
     }
+
+    public function scopeFilter($query, $term)
+    {
+        if($term)
+        {
+            $query->where(function($q) use ($term){
+                $q->orWhere('title', 'LIKE', "%{$term}%");
+                $q->orWhere('excerpt', 'LIKE', "%{$term}%");
+                $q->orWhere('body', 'LIKE', "%{$term}%");
+                $q->orWhereHas('author', function($subQuery) use ($term){
+                    $subQuery->where('name', 'LIKE', "%{$term}%");
+                });
+                $q->orWhereHas('category', function($subQuery) use ($term){
+                    $subQuery->where('title', 'LIKE', "%{$term}%");
+                });
+            });
+        }
+        return $query;
+    }
 }

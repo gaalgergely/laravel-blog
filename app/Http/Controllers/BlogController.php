@@ -13,14 +13,7 @@ class BlogController extends Controller
 
     public function index(){
 
-        $posts = Post::with('author')->latestFirst()->published();
-        if($term = request('term'))
-        {
-            $posts->where('title', 'LIKE', "%{$term}%");
-            $posts->orWhere('excerpt', 'LIKE', "%{$term}%");
-            $posts->orWhere('body', 'LIKE', "%{$term}%");
-        }
-        $posts = $posts->simplePaginate($this->limit);
+        $posts = Post::with('author')->latestFirst()->published()->filter(request('term'))->simplePaginate($this->limit);
 
         return view('blog.index', compact('posts'));
     }
