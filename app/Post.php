@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 class Post extends Model
@@ -135,6 +136,18 @@ class Post extends Model
             $tags[] = "<a href=\"{$route}\">{$tag->name}</a>";
         }
         return implode(', ', $tags);
+    }
+
+    public function getCommentCountAttribute()
+    {
+        $commentsCount = $this->comments->count();
+        return $commentsCount . ' ' . Str::plural('Comment', $commentsCount);
+    }
+
+    public function getAuthorPostCountAttribute()
+    {
+        $authorPostCount = $this->author->posts()->published()->count();
+        return $authorPostCount . ' ' . Str::plural('post', $authorPostCount);
     }
 
     public function dateFormatted($showTimes = false){

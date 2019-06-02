@@ -14,7 +14,7 @@ class BlogController extends Controller
 
     public function index(){
 
-        $posts = Post::with('author', 'category', 'tags')->latestFirst()->published()->filter(request()->only(['term', 'month', 'year']))->simplePaginate($this->limit);
+        $posts = Post::with('author', 'category', 'tags', 'comments')->latestFirst()->published()->filter(request()->only(['term', 'month', 'year']))->simplePaginate($this->limit);
 
         return view('blog.index', compact('posts'));
     }
@@ -23,7 +23,7 @@ class BlogController extends Controller
 
         $categoryName = $category->title;
 
-        $posts = $category->posts()->with('author', 'category', 'tags')->latestFirst()->published()->simplePaginate($this->limit);
+        $posts = $category->posts()->with('author', 'category', 'tags', 'comments')->latestFirst()->published()->simplePaginate($this->limit);
 
         return view('blog.index', compact('posts', 'categoryName'));
     }
@@ -32,7 +32,7 @@ class BlogController extends Controller
     {
         $authorName = $author->name;
 
-        $posts = $author->posts()->with('author', 'category', 'tags')->latestFirst()->published()->simplePaginate($this->limit);
+        $posts = $author->posts()->with('author', 'category', 'tags', 'comments')->latestFirst()->published()->simplePaginate($this->limit);
 
         return view('blog.index', compact('posts', 'authorName'));
     }
@@ -41,7 +41,7 @@ class BlogController extends Controller
     {
         $tagName = $tag->name;
 
-        $posts = $tag->posts()->with('author', 'category', 'tags')->latestFirst()->published()->simplePaginate($this->limit);
+        $posts = $tag->posts()->with('author', 'category', 'tags', 'comments')->latestFirst()->published()->simplePaginate($this->limit);
 
         return view('blog.index', compact('posts', 'tagName'));
     }

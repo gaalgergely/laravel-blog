@@ -23,10 +23,7 @@
                                     <li><i class="fa fa-folder"></i><a href="{{ route('category', $post->category->slug) }}"> {{ $post->category->title }}</a></li>
                                     <li><i class="fa fa-tag"></i>{!! $post->tags_html !!}</li>
                                     <li><i class="fa fa-comments"></i>
-                                        <a href="#comments">
-                                            <?php $commentCount = $post->comments->count() ?>
-                                            {{ $commentCount }} {{ \Illuminate\Support\Str::plural('Comment', $commentCount) }}
-                                        </a>
+                                        <a href="#comments">{{ $post->comment_count }}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -48,9 +45,7 @@
                             <h4 class="media-heading"><a href="{{ route('author', $post->author->slug) }}">{{ $post->author->name }}</a></h4>
                             <div class="post-author-count">
                                 <a href="{{ route('author', $post->author->slug) }}">
-                                    <i class="fa fa-clone"></i>
-                                    <?php $postCount = $post->author->posts()->published()->count() ?>
-                                    {{ $postCount }} {{ \Illuminate\Support\Str::plural('post', $postCount) }}
+                                    <i class="fa fa-clone"></i> {{ $post->author_post_count }}
                                 </a>
                             </div>
                             {!! $post->author->bio_html !!}

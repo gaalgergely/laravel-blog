@@ -1,9 +1,6 @@
 <a name="comments"></a>
 <article class="post-comments">
-    <h3><i class="fa fa-comments"></i>
-        <?php $commentCount = $post->comments->count() ?>
-        {{ $commentCount }} {{ \Illuminate\Support\Str::plural('Comment', $commentCount) }}
-    </h3>
+    <h3><i class="fa fa-comments"></i>{{ $post->comment_count }}</h3>
 
     <div class="comment-body padding-10">
         <ul class="comments-list">
