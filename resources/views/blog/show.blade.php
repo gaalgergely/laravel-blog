@@ -53,7 +53,8 @@
                     </div>
                 </article>
 
-                <!-- comments here -->
+                @include('blog.comments')
+
             </div>
             @include('layouts.sidebar')
         </div>

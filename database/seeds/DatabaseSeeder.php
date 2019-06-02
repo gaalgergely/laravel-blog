@@ -6,6 +6,7 @@ use App\User;
 use App\Category;
 use App\Post;
 use App\Tag;
+use App\Comment;
 
 class DatabaseSeeder extends Seeder
 {
@@ -47,5 +48,7 @@ class DatabaseSeeder extends Seeder
 
         factory(Tag::class, 20)->create();
         $this->call(PostTagTableSeeder::class);
+
+        factory(Comment::class, 250)->create();
     }
 }
