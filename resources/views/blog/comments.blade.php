@@ -1,73 +1,31 @@
+<a name="comments"></a>
 <article class="post-comments">
-    <h3><i class="fa fa-comments"></i> 5 Comments</h3>
+    <h3><i class="fa fa-comments"></i>
+        <?php $commentCount = $post->comments->count() ?>
+        {{ $commentCount }} {{ \Illuminate\Support\Str::plural('Comment', $commentCount) }}
+    </h3>
 
     <div class="comment-body padding-10">
         <ul class="comments-list">
+            @forelse($post->comments as $comment)
             <li class="comment-item">
                 <div class="comment-heading clearfix">
                     <div class="comment-author-meta">
-                        <h4>John Doe <small>January 14, 2016</small></h4>
+                        <h4>{{ $comment->author_name }} <small>{{ $comment->date }}</small></h4>
                     </div>
                 </div>
                 <div class="comment-content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio nesciunt nulla est, atque ratione nostrum cumque ducimus maxime, amet enim tempore ipsam. Id ea, veniam ipsam perspiciatis assumenda magnam doloribus!</p>
-                    <p>Quibusdam iusto culpa, necessitatibus, libero sequi quae commodi ea ab non facilis enim vitae inventore laborum hic unde esse debitis. Adipisci nostrum reprehenderit explicabo, non molestias aliquid quibusdam tempore. Vel.</p>
+                    {!! $comment->body_html !!}
                 </div>
             </li>
-
+            @empty
             <li class="comment-item">
-                <div class="comment-heading clearfix">
-                    <div class="comment-author-meta">
-                        <h4>John Doe <small>January 14, 2016</small></h4>
-                    </div>
-                </div>
                 <div class="comment-content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio nesciunt nulla est, atque ratione nostrum cumque ducimus maxime, amet enim tempore ipsam. Id ea, veniam ipsam perspiciatis assumenda magnam doloribus!</p>
-                    <p>Quibusdam iusto culpa, necessitatibus, libero sequi quae commodi ea ab non facilis enim vitae inventore laborum hic unde esse debitis. Adipisci nostrum reprehenderit explicabo, non molestias aliquid quibusdam tempore. Vel.</p>
-
-                    <ul class="comments-list-children">
-                        <li class="comment-item">
-                            <div class="comment-heading clearfix">
-                                <div class="comment-author-meta">
-                                    <h4>John Doe <small>January 14, 2016</small></h4>
-                                </div>
-                            </div>
-                            <div class="comment-content">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio nesciunt nulla est, atque ratione nostrum cumque ducimus maxime, amet enim tempore ipsam. Id ea, veniam ipsam perspiciatis assumenda magnam doloribus!</p>
-                                <p>Quibusdam iusto culpa, necessitatibus, libero sequi quae commodi ea ab non facilis enim vitae inventore laborum hic unde esse debitis. Adipisci nostrum reprehenderit explicabo, non molestias aliquid quibusdam tempore. Vel.</p>
-                            </div>
-                        </li>
-
-                        <li class="comment-item">
-                            <div class="comment-heading clearfix">
-                                <div class="comment-author-meta">
-                                    <h4>John Doe <small>January 14, 2016</small></h4>
-                                </div>
-                            </div>
-                            <div class="comment-content">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio nesciunt nulla est, atque ratione nostrum cumque ducimus maxime, amet enim tempore ipsam. Id ea, veniam ipsam perspiciatis assumenda magnam doloribus!</p>
-                                <p>Quibusdam iusto culpa, necessitatibus, libero sequi quae commodi ea ab non facilis enim vitae inventore laborum hic unde esse debitis. Adipisci nostrum reprehenderit explicabo, non molestias aliquid quibusdam tempore. Vel.</p>
-
-                                <ul class="comments-list-children">
-                                    <li class="comment-item">
-                                        <div class="comment-heading clearfix">
-                                            <div class="comment-author-meta">
-                                                <h4>John Doe <small>January 14, 2016</small></h4>
-                                            </div>
-                                        </div>
-                                        <div class="comment-content">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio nesciunt nulla est, atque ratione nostrum cumque ducimus maxime, amet enim tempore ipsam. Id ea, veniam ipsam perspiciatis assumenda magnam doloribus!</p>
-                                            <p>Quibusdam iusto culpa, necessitatibus, libero sequi quae commodi ea ab non facilis enim vitae inventore laborum hic unde esse debitis. Adipisci nostrum reprehenderit explicabo, non molestias aliquid quibusdam tempore. Vel.</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
+                    <p>There are no comments yet.</p>
                 </div>
             </li>
+            @endforelse
         </ul>
-
     </div>
 
     <div class="comment-footer padding-10">
