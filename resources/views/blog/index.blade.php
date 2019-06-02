@@ -45,7 +45,7 @@
             @endforelse
 
             <nav>
-                {{ $posts->appends(request()->only(['term']))->links() }}
+                {{ $posts->appends(request()->only(['term', 'year', 'month']))->links() }}
             </nav>
         </div>
         @include('layouts.sidebar')

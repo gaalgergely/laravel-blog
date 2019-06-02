@@ -174,9 +174,22 @@ class Post extends Model
         return $query->whereNull('published_at');
     }
 
-    public function scopeFilter($query, $term)
+    public function scopeArchives($query)
     {
-        if($term)
+        return $query->selectRaw('COUNT(id) AS post_count, YEAR(published_at) as year, MONTHNAME(published_at) as month')->published()->groupBy('year','month')->orderByRaw('min(published_at) desc');
+    }
+
+    public function scopeFilter($query, $filter)
+    {
+        if(isset($filter['month']) && $month = $filter['month'])
+        {
+            $query->whereMonth('published_at', Carbon::parse($month)->month);
+        }
+        if(isset($filter['year']) && $year = $filter['year'])
+        {
+            $query->whereYear('published_at', $year);
+        }
+        if(isset($filter['term']) &&  $term = $filter['term'])
         {
             $query->where(function($q) use ($term){
                 $q->orWhere('title', 'LIKE', "%{$term}%");
