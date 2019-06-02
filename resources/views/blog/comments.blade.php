@@ -4,7 +4,7 @@
 
     <div class="comment-body padding-10">
         <ul class="comments-list">
-            @forelse($post->comments as $comment)
+            @forelse($postComments as $comment)
             <li class="comment-item">
                 <div class="comment-heading clearfix">
                     <div class="comment-author-meta">
@@ -23,6 +23,9 @@
             </li>
             @endforelse
         </ul>
+        <nav>
+            {!! $postComments->links() !!}
+        </nav>
     </div>
 
     <div class="comment-footer padding-10">
