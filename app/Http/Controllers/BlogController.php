@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Forms\CommentForm;
 use App\Tag;
 use App\User;
-use Illuminate\Http\Request;
 use App\Post;
+use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class BlogController extends Controller
 {
+    use FormBuilderTrait;
+
     protected $limit = 5;
 
     public function index(){
@@ -46,12 +50,33 @@ class BlogController extends Controller
         return view('blog.index', compact('posts', 'tagName'));
     }
 
-    public function show(Post $post)
+    public function show(FormBuilder $formBuilder, Post $post)
     {
         $post->increment('view_count');
 
-        $postComments = $post->comments()->simplePaginate(5);
+        $postComments = $post->comments()->orderBy('created_at', 'desc')->simplePaginate(5);
 
-        return view('blog.show', compact('post', 'postComments'));
+        $form = $formBuilder->create(CommentForm::class, [
+            'method' => 'POST',
+            'url' => route('blog.show', $post->slug)
+        ]);
+
+        return view('blog.show', compact('post', 'postComments', 'form'));
+    }
+
+    public function comment(Post $post)
+    {
+        $form = $this->form(CommentForm::class);
+
+        // It will automatically use current request, get the rules, and do the validation
+        if (!$form->isValid()) {
+            return redirect()->back()->withErrors($form->getErrors())->withInput();
+        }
+
+        // Or automatically redirect on error. This will throw an HttpResponseException with redirect
+        $form->redirectIfNotValid();
+
+        $post->comments()->create($form->getFieldValues());
+        return redirect()->route('blog.show', $post->slug . '#comments')->with('success', 'Your comment was created successfully!');
     }
 }
