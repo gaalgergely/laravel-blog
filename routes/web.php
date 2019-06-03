@@ -69,4 +69,5 @@ Route::name('backend.')->group(function(){
         'uses' => 'Backend\HomeController@update',
         'as' => 'account.update'
     ]);
+    Route::resource('/backend/tag', 'Backend\TagController');
 });

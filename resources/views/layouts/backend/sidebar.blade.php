@@ -46,6 +46,18 @@
                     <li><a href="{{ route('backend.category.create') }}"><i class="fa fa-circle-o"></i> Add New</a></li>
                 </ul>
             </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-tag"></i>
+                    <span>Tags</span>
+                    <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('backend.tag.index') }}"><i class="fa fa-circle-o"></i> All Tags</a></li>
+                    <li><a href="{{ route('backend.tag.create') }}"><i class="fa fa-circle-o"></i> Add New</a></li>
+                </ul>
+            </li>
             @endrole
             @role('admin')
             <li>
