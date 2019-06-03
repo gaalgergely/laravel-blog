@@ -150,6 +150,13 @@ class Post extends Model
         return $authorPostCount . ' ' . Str::plural('post', $authorPostCount);
     }
 
+    public function postTags($implode = true)
+    {
+        $tags = $this->tags->pluck('name')->toArray();
+        if($implode) return implode(', ', $tags);
+        return $tags;
+    }
+
     public function dateFormatted($showTimes = false){
         $format = 'd/m/Y';
         if($showTimes) $format .= ' H:i:s';
@@ -222,5 +229,23 @@ class Post extends Model
             });
         }
         return $query;
+    }
+
+    public function attachTags($tags)
+    {
+        $tags = explode(",", $tags);
+        $tagIds = [];
+
+        foreach ($tags as $tag)
+        {
+            $newTag = Tag::firstOrCreate([
+                'name' => ucwords(trim($tag)),
+                'slug' => Str::slug($tag)
+            ]);
+
+            $tagIds[] = $newTag->id;
+        }
+
+        $this->tags()->sync($tagIds);
     }
 }

@@ -80,7 +80,11 @@ class BlogController extends BackendController
         // Or automatically redirect on error. This will throw an HttpResponseException with redirect
         $form->redirectIfNotValid();
 
-        $request->user()->posts()->create($form->getFieldValues());
+        $data = $form->getFieldValues();
+
+        $post = $request->user()->posts()->create($data);
+        $post->attachTags($data['post_tags']);
+
         return redirect()->route('backend.blog.index')->with('success', 'Your post was created successfully!');
     }
 
@@ -134,8 +138,11 @@ class BlogController extends BackendController
         // Or automatically redirect on error. This will throw an HttpResponseException with redirect
         $form->redirectIfNotValid();
 
+        $data = $form->getFieldValues();
+
         $post = Post::findOrFail($id);
-        $post->update($form->getFieldValues());
+        $post->update($data);
+        $post->attachTags($data['post_tags']);
 
         return redirect()->route('backend.blog.index')->with('success', 'Your post was updated successfully!');
     }

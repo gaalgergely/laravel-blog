@@ -40,6 +40,9 @@ class PostForm extends Form
                 'empty_value' => '=== Select category ===',
                 'rules' => ['required', new CategoryExistsRule()]
             ])
+            ->add('post_tags', 'text', [
+                'label_show' => false
+            ])
             ->add('submit', 'submit', [
                 'label' => 'Save',
                 'attr' => ['class' => 'btn btn-primary']

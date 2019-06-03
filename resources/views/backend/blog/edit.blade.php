@@ -61,6 +61,14 @@
                         </div>
                     </div>
                     <div class="box">
+                        <div class="box-header with-border"><h3 class="box-title">Tags</h3></div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                {!! form_row($form->post_tags) !!}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box">
                         <div class="box-header with-border"><h3 class="box-title">Feature Image</h3></div>
                         <div class="box-body text-center">
                             {!! form_row($form->image) !!}
@@ -106,4 +114,20 @@
         $('button[type=submit]').click();
     });
 </script>
+<script src="/backend/plugins/tag-editor/jquery.caret.min.js"></script>
+<script src="/backend/plugins/tag-editor/jquery.tag-editor.min.js"></script>
+<script>
+    var options = {};
+
+    @if($form->getModel())
+        options = {
+        initialTags: {!! json_encode($form->getModel()->postTags(false)) !!},
+    };
+    @endif
+    $('input[name=post_tags]').tagEditor(options);
+</script>
+@endsection
+
+@section('style')
+<link rel="stylesheet" href="/backend/plugins/tag-editor/jquery.tag-editor.css">
 @endsection
