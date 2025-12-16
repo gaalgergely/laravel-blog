@@ -1,77 +1,57 @@
-This repository is for practicing Laravel framework.
-I learn on Udemy.
-<br><b>Professional Blog+CMS Development With Laravel 5</b><br>
-https://www.udemy.com/build-blog-cms-with-laravel-5<br>
-Build Professional Blog+CMS with Laravel 5.x and take your Laravel skills to the next level
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# Laravel Blog CMS
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+A Laravel 5.8–based blog and content management system that provides a public-facing blog with comments and an authenticated backend for managing posts, categories, tags, and users.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Public blog experience**
+  - Paginated listings with search plus month/year archive filters, and routes for viewing posts by category, author, or tag.【F:app/Http/Controllers/BlogController.php†L17-L50】【F:routes/web.php†L14-L42】
+  - Post detail pages increment view counts, render markdown content, and expose a validated comment form with paginated comment threads.【F:app/Http/Controllers/BlogController.php†L53-L81】
+- **Content authoring & moderation**
+  - Backend CRUD for posts, including create/edit forms, soft deletion to trash, restore, and permanent deletion flows.【F:routes/web.php†L48-L57】【F:app/Http/Controllers/Backend/BlogController.php†L20-L180】
+  - Status filters for published, scheduled, draft, own posts, or trashed posts to simplify editorial views.【F:app/Http/Controllers/Backend/BlogController.php†L20-L48】
+  - Category, tag, and user management via dedicated resource controllers and account profile update routes.【F:routes/web.php†L58-L72】
+- **Rich post model**
+  - Relationships to authors, categories, tags, and comments, plus helpers for tag lists, comment counts, and publication labels.【F:app/Post.php†L18-L175】
+  - Markdown rendering for body/excerpt, archive scopes, search filters, and publication state scopes (published/scheduled/draft).【F:app/Post.php†L122-L232】
+  - Image upload pipeline that stores originals and generates thumbnails based on configurable dimensions.【F:app/Post.php†L52-L116】【F:config/cms.php†L1-L11】
+- **Roles and permissions** powered by Laratrust for gated backend access (see `app/Helpers/permissions.php`).【F:composer.json†L10-L49】
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Architecture
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Framework:** Laravel 5.8 application using Blade views, Eloquent models, and form-builder based forms for both frontend comments and backend CRUD flows.【F:composer.json†L10-L49】【F:app/Http/Controllers/BlogController.php†L53-L81】【F:app/Http/Controllers/Backend/BlogController.php†L56-L148】
+- **Domain models:** `Post` drives publication logic, tagging, image management, and scopes for filtering and archives; `Category`, `Tag`, `User`, and `Comment` support taxonomy and user-generated content.【F:app/Post.php†L18-L250】
+- **Routing:** Public blog routes are open while authentication-protected backend routes are grouped under `/backend`, with registration disabled by default.【F:routes/web.php†L14-L72】
 
-## Learning Laravel
+## Tech Stack & Dependencies
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- PHP 7.1+ with Laravel 5.8.
+- Key packages: graham-campbell/markdown for rendering, intervention/image for image processing, kris/laravel-form-builder for dynamic forms, and santigarcor/laratrust for roles/permissions.【F:composer.json†L10-L49】
+- Dev tooling includes Laravel Debugbar, Whoops, Faker, Mockery, Collision, and PHPUnit for testing.【F:composer.json†L21-L28】
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1400 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Running the Project
 
-## Laravel Sponsors
+1. Install PHP and Composer dependencies:
+   ```bash
+   composer install
+   npm install
+   ```
+2. Copy `.env.example` to `.env`, set your database credentials, and generate the app key:
+   ```bash
+   php artisan key:generate
+   ```
+3. Run migrations and seed any initial data you require:
+   ```bash
+   php artisan migrate --seed
+   ```
+4. Serve the application:
+   ```bash
+   php artisan serve
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Extensibility Ideas
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Add media library management, scheduled publishing queues, or WYSIWYG/markdown hybrid editing for richer authoring.
+- Introduce API endpoints for headless usage or mobile clients.
+- Expand permissions and workflow states for editorial review.
+- Enhance comment moderation with spam detection or approval queues.
